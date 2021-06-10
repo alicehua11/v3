@@ -6,7 +6,7 @@
 
 The objective of this homework is to buld a lightweight containerized application pipeline with componetns running on the edige, your Jetson NX, and in the the cloud, a VM in AWS.  The application should be writen in a modular/cloud native way so that it could be run on any edge devce or hub and any cloud VM, or even another type of device connected to some type of storage instead of cloud hosted VM.  In addition, the edge application should be deployed using Kubernetes (K3s for example) on your Jetson NX and the cloud VM components should run using Docker.
 
-You will build an application that is able to capture faces in a video stream coming from the edge, then transmit them to the cloud via MTQQ and saving these faces for "long term storage".  For the face detector component, we ask that you use OpenCV and write an application that scans the video frames coming from the connected USB camera for faces. When one or more faces are detected in the frame, the application should cut them out of the frame and send via a binary message each.  Your edge applicaiton should use MQTT as your messaging fabric.  As you'll be treating your NX as hub, you'll need a broker installed on the NX, and that your face detector sends its messages to this broker first. You'll then need another component that receives these messages from the local broker, and sends them to the cloud [MQTT broker]. Because edge applications often use messages to communicate with other local components, you'll need another local listener that just outputs to its log, e.g. to standard out, that it has recevied a face message.
+You will build an application that is able to capture faces in a video stream coming from the edge, then transmit them to the cloud via MTQQ and saving these faces for "long term storage".  For the face detector component, we ask that you use OpenCV and write an application that scans the video frames coming from the connected USB camera for faces. When one or more faces are detected in the frame, the application should cut them out of the frame and send via a binary message each.  Your edge applicaiton should use MQTT as your messaging fabric.  As you'll be treating your NX as hub, you'll need a broker installed on the NX, and that your face detector sends its messages to this broker first. You'll then need another component that receives these messages from the local broker, and sends them to the cloud [MQTT broker]. Because edge applications often use messages to communicate with other local components, you'll need another local listener that just outputs to its log (standard out) that it has received a face message.
 
 In the cloud, you need to provision a lightweight virtual machine (1-2 CPUs and 2-4 G of RAM should suffice) and run an MQTT broker in a Docker container. As discussed above, the faces will need to be sent here as binary messages.  You'll need a second component here that receives the messages and saves the images to to the s3 Object storage, ideally via s3fs (see https://github.com/s3fs-fuse/s3fs-fuse).
 
@@ -64,7 +64,7 @@ Review Lab 3!
 You are scored based on the following:
 
 - 60 points for a containerized end to end appliation
-- 10 points for using a user defined network in the cloud
+- 10 points for using a user defined network in the cloud (automatic if using k8s on the cloud side)
 - 10 points for using Kuberentes on your NX
 - 10 points for explaining the MQTT topics and the QoS that you used.
 - 10 points for storing your faces in object storage
@@ -72,6 +72,6 @@ You are scored based on the following:
 
 What to submit to ISVC:
 
-A link to the repository of your for this homework [private repo please] which should include your code, Dockerfiles, and Kubernetes YAML files.  In addition, the answers to the 2 questions should be included.
+A link to the repository of your for this homework [private repo please] which should include your code, Dockerfiles, Docker command used, and Kubernetes YAML files.  In addition, the answers to the 2 questions (eg. bullet point #4 above) should be included.
 
 A publicly accessble http link to the location of your faces in the object storage. 
